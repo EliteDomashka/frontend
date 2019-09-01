@@ -47,7 +47,7 @@ function getTasksByWeek(week, callback) {
 
 function getAgendaByWeek(week, callback) {
   if (lessonsStorage[week] !== null && lessonsStorage[week] !== undefined) {
-    // callback(tasksStorage[week]);
+    // callback(lessonsStorage[week]);
   } else {
     lessonsStorage[week] = [[], [], [], [], [], []];
   }
@@ -70,7 +70,7 @@ function getAgendaByWeek(week, callback) {
     }
 
 
-    window.localStorage.setItem('tasks', JSON.stringify(lessonsStorage));
+    window.localStorage.setItem('lessons', JSON.stringify(lessonsStorage));
   }).catch((error) => {
     console.log(error);
   }).finally(() => {

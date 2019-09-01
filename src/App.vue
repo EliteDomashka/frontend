@@ -9,7 +9,7 @@
       <b-button type="is-danger"
                 rounded
                 size="is-large"
-                icon-right="file-document-box"
+                :icon-right="action ? 'book' : 'file-document-box'"
                 @click="toggle"/>
 <!--      <button class="button is-rounded is-medium">-->
 <!--        <div>-->

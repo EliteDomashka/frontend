@@ -8,6 +8,7 @@ import App from './App.vue';
 import './registerServiceWorker';
 import './assets/scss/app.scss';
 import Tasks from './pages/Tasks';
+import Lessons from './pages/Lessons';
 
 window.API_URL = 'https://backend.domashka.cloud/api/';
 Vue.use(vuedayjs, {
@@ -22,6 +23,7 @@ Vue.prototype.localStorage = window.localStorage;
 Vue.config.productionTip = false;
 
 Vue.component('Tasks', Tasks);
+Vue.component('Lessons', Lessons);
 new Vue({
   render: h => h(App),
 }).$mount('#app');

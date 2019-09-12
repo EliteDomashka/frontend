@@ -1,15 +1,14 @@
 import axios from 'axios';
+import { NotificationProgrammatic as Notification } from 'buefy'
 
 if (window.localStorage.getItem('tasks') !== null) window.tasks = JSON.parse(window.localStorage.getItem('tasks'));
 if (window.tasks === undefined || window.tasks === null) window.tasks = {};
 const tasksStorage = window.tasks;
-console.log('laoded');
-console.log(tasksStorage);
 
 if (window.localStorage.getItem('lessons') !== null) window.lessons = JSON.parse(window.localStorage.getItem('lessons'));
 if (window.lessons === undefined || window.lessons === null) window.lessons = {};
 const lessonsStorage = window.lessons;
-console.log(lessonsStorage);
+
 
 
 function getTasksByWeek(week, callback) {
@@ -37,9 +36,7 @@ function getTasksByWeek(week, callback) {
 
 
     window.localStorage.setItem('tasks', JSON.stringify(tasksStorage));
-  }).catch((error) => {
-    console.log(error);
-  }).finally(() => {
+  }).catch((error) => errorHandler(error)).finally(() => {
     callback(tasksStorage[week]);
   });
   return week;
@@ -71,18 +68,21 @@ function getAgendaByWeek(week, callback) {
 
 
     window.localStorage.setItem('lessons', JSON.stringify(lessonsStorage));
-  }).catch((error) => {
-    console.log(error);
-  }).finally(() => {
+  }).catch((error) => errorHandler(error)).finally(() => {
     callback(lessonsStorage[week]);
   });
   return week;
 }
 
-export default {
-  getTasksByWeek,
-  getAgendaByWeek,
-};
+function errorHandler(error) {
+  console.log(error);
+  if(error.response && error.response.data){
+    if(error.response.data.message){
+      Notification.open(error.response.data.message);
+      alert(error.response.data.message)
+    }
+  }
+}
 export {
   getTasksByWeek,
   getAgendaByWeek,

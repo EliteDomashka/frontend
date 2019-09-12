@@ -6,7 +6,7 @@
     </keep-alive>
 
     <div class="floatbuuton">
-      <b-button type="is-danger"
+      <b-button type="is-info"
                 rounded
                 size="is-large"
                 :icon-right="action ? 'book' : 'file-document-box'"
@@ -27,7 +27,7 @@ export default {
   name: 'app',
   data() {
     return {
-      action: 0,
+      action: 1,
     };
   },
   methods: {

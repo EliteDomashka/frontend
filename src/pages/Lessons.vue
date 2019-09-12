@@ -2,7 +2,7 @@
   <section>
     <b-button class="is-medium is-fullwidth" @click="infiniteHandler(null)">Минула неділя</b-button>
     <div v-for="week in weeks">
-      <div class="hero is-linkedin is-fullheight animated flip" :id="'week'+week">
+      <div class="hero is-linkedin is-fullheight" :id="'week'+week">
         <div class="hero-body">
           <div class="container">
             <p class="title">
@@ -23,10 +23,10 @@
                       :mobile-cards=false
                     >
                       <template slot-scope="props">
-                        <b-table-column field="name" label="#" width="40"  sortable numeric>
+                        <b-table-column field="name" label="#" width="40"  numeric>
                           {{ props.row.num+1 }}
                         </b-table-column>
-                        <b-table-column field="title" label="Предмет" width="40">
+                        <b-table-column field="title" label="Предмет">
                           {{ props.row.title }}
                         </b-table-column>
                       </template>

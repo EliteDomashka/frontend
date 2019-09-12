@@ -1,0 +1,51 @@
+
+#main-title {
+  font-size: 17pt;
+}
+
+@media screen and (max-width: 1230px) {
+  .mobile-padding {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  .taginput.control {
+    height: 20%
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .column .tags {
+    padding-top: 3%;
+  }
+}
+
+.content ol {
+  list-style: decimal outside;
+  margin-left: 0.75em;
+  margin-top: 0em;
+}
+
+.description {
+  font-family: "CentSchbook Mono BT", "Bitstream Vera Sans Mono", monofont, monospace;
+}
+
+a.is-inverted {
+  a {
+    color: $primary-invert;
+  }
+  a:hover {
+    color: $primary;
+  }
+}
+
+.content p {
+  white-space: pre-line;
+}
+
+
+th[width="40px"] {
+  display: none;
+}
+td.chevron-cell {
+  display: none;
+}

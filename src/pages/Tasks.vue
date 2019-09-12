@@ -2,7 +2,7 @@
   <section>
     <b-button class="is-medium is-fullwidth" @click="infiniteHandler(null)">Минула неділя</b-button>
     <div v-for="week in weeks">
-      <div class="hero is-info is-fullheight animated flip" :id="'week'+week">
+      <div class="hero is-fullheight" :id="'week'+week">
         <div class="hero-body">
           <div class="container">
             <p class="title">
@@ -16,7 +16,7 @@
                     <p class="card-header-title">{{weekday}} ({{$dayjs().week(week).startOf('week').add(day, 'day').format("DD.MM.YYYY")}})</p>
                   </header>
                   <div class="card-content">
-                    <div class="notification is-info" v-if="tasks[week][day] === undefined || tasks[week][day].length === 0">no data</div>
+                    <b-notification has-icon type="is-primary" :closable="false" v-if="tasks[week][day] === undefined || tasks[week][day].length === 0">Данні відсутні</b-notification>
                     <b-table
                       v-else
                       :data="tasks[week][day]"
@@ -28,7 +28,7 @@
                       :mobile-cards=false
                     >
                       <template slot-scope="props">
-                        <b-table-column field="name" label="#" width="40"  sortable numeric>
+                        <b-table-column field="name" label="#" width="40" numeric>
                           {{ props.row.num+1 }}
                         </b-table-column>
                         <b-table-column field="title" label="Предмет" width="40">
@@ -40,7 +40,7 @@
                         </b-table-column>
                       </template>
                       <template slot="detail" slot-scope="props">
-                        <p class="detail-text" v-html="props.row.description"></p>
+                        <p class="detail-text" v-html="props.row.desc"></p>
                       </template>
                     </b-table>
                   </div>
@@ -101,14 +101,15 @@ export default {
             }
           }
           this.tasks[week] = response;
-          if(scroll) this.$nextTick(() => this.$scrollTo(`#week${week}`, 500, { offset: 0, cancelable: false }));
+          if (scroll) this.$nextTick(() => this.$scrollTo(`#week${week}`, 500, { offset: 0, cancelable: false }));
 
           if (callback !== null) callback();
         });
       } else if (callback !== null) callback();
     },
     infiniteHandler($state) {
-      if (this.weeks[0] !== undefined) this.infinteBase($state, this.weeks[0] - 1, false); else $state.reset();
+      if (this.weeks[0] !== undefined) this.infinteBase($state, this.weeks[0] - 1, false);
+      else $state.reset();
     },
     infinitebottopHandler($state) {
       const len = this.weeks.length;
@@ -117,7 +118,7 @@ export default {
         this.infinteBase($state, week, true);
       } else $state.reset();
     },
-    infinteBase($state, week, isAdd) {
+    infinteBase($state, week) {
       if (week > 40 || week < 30) return;
       this.getWeek(week, () => {
         console.log(`#week${week}`);

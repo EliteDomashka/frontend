@@ -21,10 +21,12 @@
                       v-else
                       :data="tasks[week][day]"
                       detailed
+                      detail-key="task_id"
                       :has-detailed-visible="(row) => {
                                         if (row.desc === '') return false;
                                         return true;
                                     }"
+                      :opened-detailed="details"
                       :mobile-cards=false
                     >
                       <template slot-scope="props">
@@ -36,7 +38,7 @@
                         </b-table-column>
                         <b-table-column field="task" label="Домашка">
                           {{props.row.task}}
-                          <a class="detail-warn" v-if="props.row.desc !== ''">...</a>
+                          <a class="detail-warn" v-if="props.row.desc != ''" @click.stop="openDetail(props.row.task_id)">...</a>
                         </b-table-column>
                       </template>
                       <template slot="detail" slot-scope="props">
@@ -69,6 +71,7 @@ export default {
     return {
       tasks: {},
       weeks: [],
+      details: []
     };
   },
   computed: {
@@ -89,6 +92,16 @@ export default {
     this.getWeek(currectWeek);
   },
   methods: {
+    openDetail(task_id){
+      console.log(this.details);
+      var key = this.details.indexOf(task_id);
+      if(key === -1){
+        this.$set(this.details, this.details.length, task_id);
+      }else{
+        this.$delete(this.details, key);
+      }
+    },
+
     getWeek(week, callback = null, scroll = true) {
       const data = this.tasks[week];
       if (data === undefined || data === null || (typeof data === 'object' && Object.keys(data).length === 0)) {
@@ -135,5 +148,16 @@ export default {
 </script>
 
 <style scoped>
+  span div{
+    display: inline;
+  }
+  .detail-text{
+    white-space: pre-line;
+  }
+  .detail-warn{
+    color: #0077b5;
+    font-size: x-large;
+    font-weight: bold;
+  }
 
 </style>

@@ -76,11 +76,21 @@ function getAgendaByWeek(week, callback) {
 
 function errorHandler(error) {
   console.log(error);
-  if(error.response && error.response.data){
-    if(error.response.data.message){
-      Notification.open(error.response.data.message);
-      alert(error.response.data.message)
+  if (error.response && error.response.data) {
+    if (error.response.data.message) {
+      Notification.open({
+        message: error.response.data.message,
+        type: 'is-danger',
+        hasIcon: true,
+        duration: 40000,
+      });
     }
+  } else {
+    Notification.open({
+      message: error.toString(),
+      type: 'is-danger',
+      hasIcon: true,
+    });
   }
 }
 export {

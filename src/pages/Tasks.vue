@@ -132,7 +132,7 @@ export default {
       } else $state.reset();
     },
     infinteBase($state, week) {
-      if (week > 40 || week < 30) return;
+      if (week > 60 || week < 30) return;
       this.getWeek(week, () => {
         console.log(`#week${week}`);
         if ($state !== null) {

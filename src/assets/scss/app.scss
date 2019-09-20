@@ -26,8 +26,24 @@ $addColors: (
 );
 $colors: map-merge($colors, $addColors);
 
-@import "~bulma";
-@import "~buefy/src/scss/buefy";
+@import "~bulma/sass/utilities/_all";
+@import "~bulma/sass/base/_all";
+@import "~bulma/sass/layout/hero";
+@import "~bulma/sass/grid/columns";
+@import "~bulma/sass/elements/table";
+@import "~bulma/sass/elements/button";
+@import "~bulma/sass/elements/container";
+@import "~bulma/sass/elements/box";
+@import "~bulma/sass/elements/button";
+@import "~bulma/sass/elements/title";
+@import "~bulma/sass/elements/notification";
+@import "~bulma/sass/components/media";
+@import "~bulma/sass/components/navbar";
+@import "~bulma/sass/components/card";
+@import "~bulma/sass/components/pagination";
+@import "~bulma/sass/components/modal";
+
+@import "./buefy";
 
 @import "overrides";
 @import "animated";

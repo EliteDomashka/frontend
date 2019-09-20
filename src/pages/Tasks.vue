@@ -10,6 +10,7 @@
             </p>
             <div class="columns is-mobile is-multiline">
               <div class="column is-one-third-desktop is-full-mobile is-full-tablet"
+                   v-scroll-reveal.reset
                    v-for="(weekday, day) in weekdays" :key="day">
                 <div class="card">
                   <header class="card-header">

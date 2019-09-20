@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import Buefy from 'buefy';
 import InfiniteLoading from 'vue-infinite-loading';
-import VueScrollTo from 'vue-scrollto'
+import VueScrollTo from 'vue-scrollto';
+import VueScrollReveal from 'vue-scroll-reveal';
 import vuedayjs from './helpers/vue-dayjs';
 import App from './App.vue';
 
@@ -17,6 +18,7 @@ Vue.use(vuedayjs, {
 Vue.use(Buefy);
 Vue.use(InfiniteLoading);
 Vue.use(VueScrollTo);
+Vue.use(VueScrollReveal);
 
 
 Vue.prototype.localStorage = window.localStorage;

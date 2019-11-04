@@ -24,4 +24,4 @@ const idbKeyval = {
   },
 };
 
-export { idbKeyval };
+export default { idbKeyval };

@@ -41,7 +41,10 @@
   },
   "vue": {
     "pwa": {
-      "assetsVersion": "demotest"
+      "assetsVersion": "1",
+      "workboxOptions": {
+        "skipWaiting": true
+      }
     }
   },
   "eslintConfig": {

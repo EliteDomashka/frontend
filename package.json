@@ -39,6 +39,11 @@
     "vue-cli-plugin-buefy": "^0.3.7",
     "vue-template-compiler": "^2.6.10"
   },
+  "vue": {
+    "pwa": {
+      "assetsVersion": "demotest"
+    }
+  },
   "eslintConfig": {
     "root": true,
     "env": {

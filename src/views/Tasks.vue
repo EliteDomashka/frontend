@@ -135,6 +135,7 @@ export default {
               const task = this.tasks[week][day][num];
               base[week][day][num].task = task.task;
               base[week][day][num].desc = task.desc;
+              base[week][day][num].task_id = task.task_id;
               return true;
             });
           }

@@ -1,49 +1,60 @@
 <template>
   <div id="app">
-    <keep-alive>
-      <Tasks v-if="action===1"></Tasks>
-      <Lessons v-else></Lessons>
-    </keep-alive>
+      <!-- <b-navbar>
+        <template slot="brand">
+            <b-navbar-item tag="router-link" :to="{ path: '/' }">
+                <img
+                    src="https://raw.githubusercontent.com/buefy/buefy/dev/static/img/buefy-logo.png"
+                    alt="Lightweight UI components for Vue.js based on Bulma"
+                >
+            </b-navbar-item>
+        </template>
+        <template slot="start">
+            <b-navbar-item href="#">
+                Home
+            </b-navbar-item>
+            <b-navbar-item href="#">
+                Documentation
+            </b-navbar-item>
+            <b-navbar-dropdown label="Info">
+                <b-navbar-item href="#">
+                    About
+                </b-navbar-item>
+                <b-navbar-item href="#">
+                    Contact
+                </b-navbar-item>
+            </b-navbar-dropdown>
+        </template>
 
-    <div class="floatbuuton">
-      <b-button type="is-info"
-                rounded
-                size="is-large"
-                :icon-right="action ? 'book' : 'file-document-box'"
-                @click="toggle"/>
-<!--      <button class="button is-rounded is-medium">-->
-<!--        <div>-->
-<!--        <b-icon icon="file-document-box" size="is-small"></b-icon>-->
-<!--&lt;!&ndash;        <b-icon icon="book"></b-icon>&ndash;&gt;-->
-<!--        </div>-->
-<!--      </button>-->
-    </div>
-
+        <template slot="end">
+            <b-navbar-item tag="div">
+                <div class="buttons">
+                    <a class="button is-primary">
+                        <strong>Sign up</strong>
+                    </a>
+                    <a class="button is-light">
+                        Log in
+                    </a>
+                </div>
+            </b-navbar-item>
+        </template>
+    </b-navbar> -->
+    <br>
+    <router-view/>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'app',
-  data() {
-    return {
-      action: 1,
-    };
-  },
-  methods: {
-    toggle() {
-      if (this.action === 0) this.action = 1; else this.action = 0;
-    },
-  },
-};
-</script>
-<style>
-  .floatbuuton {
-    z-index: 4;
-    bottom: 16px;
-    position: fixed;
-    right: 16px;
-  }
+<style lang="scss">
+#nav {
+  // padding: 30px;
 
-  /*style="overflow: scroll;"*/
+  a {
+    // font-weight: bold;
+    // color: #2c3e50;
+
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
+}
 </style>

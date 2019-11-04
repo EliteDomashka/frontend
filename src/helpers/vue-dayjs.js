@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 
 import locale from 'dayjs/locale/uk';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
+import dayOfYear from 'dayjs/plugin/dayOfYear';
 
 dayjs.locale(locale);
 
@@ -15,6 +16,7 @@ export default {
   install(Vue, options = {}) {
     dayjs.locale(options.lang);
     dayjs.extend(weekOfYear);
+    dayjs.extend(dayOfYear);
 
 
     Vue.prototype.$dayjs = dayjs;

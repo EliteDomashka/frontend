@@ -4,7 +4,9 @@
     <div class="column is-one-third-desktop is-full-mobile is-full-tablet" v-for="(day) in days" :key="day.dayOfYear">
         <div class="card" v-if="tableData[day.week] !== undefined" :id="'#day' + day.dayOfYear">
           <header class="card-header">
-            <p :class='{"card-header-title": true, "has-text-info": currentDay == day.dayOfYear}'>{{day.weekDay}} ({{$dayjs().week(day.week).startOf('week').day(day.day != 0 ? day.day : 6).format("DD.MM.YYYY")}})</p>
+            <p :class='{"card-header-title": true, "has-text-info": currentDay == day.dayOfYear}'>
+              {{day.weekDay}} ({{$dayjs().week(day.week).startOf('week').day(day.day != 0 ? day.day : 6).format("DD.MM.YYYY")}})
+            </p>
           </header>
           <div class="card-content">
             <b-notification has-icon type="is-primary" :closable="false"
@@ -32,7 +34,8 @@
                         <b-table-column field="task" label="Домашка">
                           <p v-if="props.row.task !== undefined">
                             {{ props.row.task }}
-                            <a class="detail-warn" v-if="props.row.desc != ''" @click.stop="openDetail(props.row.task_id)">...</a>
+                            <a class="detail-warn" v-if="props.row.desc != ''"
+                              @click.stop="openDetail(props.row.task_id)">...</a>
                           </p>
                         </b-table-column>
                       </template>

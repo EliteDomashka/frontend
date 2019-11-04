@@ -25,3 +25,4 @@ const idbKeyval = {
 };
 
 export default { idbKeyval };
+export { idbKeyval };

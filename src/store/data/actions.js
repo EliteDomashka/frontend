@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { getTasks, getSchedule } from '../../helpers/DataProvider';
+import { getTasks } from '../../helpers/DataProvider';
 
 export async function tasks({ commit }, { week, $state }) {
   // console.info(week);
@@ -8,17 +8,6 @@ export async function tasks({ commit }, { week, $state }) {
   commit('week', {
     week,
     obj: Tasks,
-    $state,
-  });
-}
-
-export async function schedule({ commit }, { week, $state }) {
-  // console.info(week);
-  const Lessons = await getSchedule(week);
-  // console.error(Lessons);
-  commit('agenda', {
-    week,
-    obj: Lessons,
     $state,
   });
 }

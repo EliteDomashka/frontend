@@ -2,9 +2,9 @@
   <section class="container">
     <div class="columns is-mobile is-multiline" >
     <div class="column is-one-third-desktop is-full-mobile is-full-tablet" v-for="(day) in days" :key="day.dayOfYear">
-        <div class="card" v-if="tableData[day.week] !== undefined" :id="'#day' + day.dayOfYear">
+        <div class="card" v-if="tasks[day.week] !== undefined && tasks[day.week] !== undefined" :id="'#day' + day.dayOfYear">
           <header class="card-header">
-            <p :class='{"card-header-title": true, "has-text-info": currentDay == day.dayOfYear}'>{{day.weekDay}} ({{$dayjs().week(day.week).startOf('week').day(day.day != 0 ? day.day : 6).format("DD.MM.YYYY")}})</p>
+            <p :class='{"card-header-title": true, "has-text-info": currentDay === day.dayOfYear}'>{{day.weekDay}} ({{$dayjs().week(day.week).startOf('week').day(day.day != 0 ? day.day : 6).format("DD.MM.YYYY")}})</p>
           </header>
           <div class="card-content">
             <b-notification has-icon type="is-primary" :closable="false"
@@ -12,7 +12,7 @@
             ].length === 0">Данні відсутні</b-notification>
             <b-table
                       v-else
-                      :data="tableData[day.week][day.day]"
+                      :data="tasks[day.week][day.day]"
                       detailed
                       detail-key="task_id"
                       :has-detailed-visible="(row) => {
@@ -24,7 +24,7 @@
                     >
                       <template slot-scope="props">
                         <b-table-column field="name" label="#" width="40" numeric>
-                          {{ props.row.num+1 }}
+                          {{ props.row.num }}
                         </b-table-column>
                         <b-table-column field="title" label="Предмет" width="40">
                           {{ props.row.title }}
@@ -33,10 +33,12 @@
                           <p v-if="props.row.task !== undefined">
                             {{ props.row.task }}
                             <a class="detail-warn" v-if="props.row.desc != ''" @click.stop="openDetail(props.row.task_id)">...</a>
+                            <a v-if="props.row.attachment_have == true" :href="'https://t.me/EliteDomashkaBot?start=task_'+props.row.task_id" target="_blank"> 📎</a>
                           </p>
                         </b-table-column>
                       </template>
                       <template slot="detail" slot-scope="props">
+                        {{ props.row.task }}
                         <p class="detail-text" v-html="props.row.desc"></p>
                       </template>
                     </b-table>
@@ -71,7 +73,6 @@ export default {
     },
     infiniteHandler($state) {
       this.$store.dispatch('tasks', { week: this.weekCounter += 1, $state });
-      this.$store.dispatch('schedule', { week: this.weekCounter, $state });
 
       const last = this.days[this.days.length - 1].dayOfYear;
       let addDays = 3;
@@ -103,7 +104,6 @@ export default {
   data() {
     return {
       details: [],
-
       weekdays: [],
 
       currentDay: this.$dayjs().dayOfYear(),
@@ -117,35 +117,6 @@ export default {
     },
     tasks() {
       return this.$store.state.data.weeks;
-    },
-    agenda() {
-      return this.$store.state.data.agenda;
-    },
-    tableData() {
-      // eslint-disable-next-line
-      let base = this.agenda;
-
-      Object.keys(base).map((week) => {
-        // console.log(week);
-        Object.keys(base[week]).map((day) => {
-          const tasks = this.tasks[week][day];
-          if (tasks !== undefined && tasks.length > 0) {
-            Object.keys(tasks).map((num) => {
-              // console.warn(this.tasks[week][day][num]);
-              const task = this.tasks[week][day][num];
-              base[week][day][num].task = task.task;
-              base[week][day][num].desc = task.desc;
-              base[week][day][num].task_id = task.task_id;
-              return true;
-            });
-          }
-          return true;
-        });
-        return true;
-      });
-      if(base == undefined) return {};
-      // console.log(base);
-      return base;
     },
   },
   created() {
@@ -165,14 +136,14 @@ export default {
     }
     this.weekdays = weekdays;
 
-    const currentDay = this.$dayjs().dayOfYear();
-    // const days = {};
+    const currentDay = this.$dayjs().startOf("week").dayOfYear();
 
     for (let day = currentDay - 7; day < currentDay + 14; day += 1) {
       const dt = this.$dayjs().dayOfYear(day);
       this.addDay(dt);
     }
-    // this.days = days;
+
+    this.$store.dispatch('schedule', { week: this.weekCounter + 1 });
   },
 };
 </script>

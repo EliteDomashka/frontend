@@ -9,7 +9,7 @@ const errorHandler = (err) => {
 export async function getTasks(week, cache = true) {
   const getFunc = async function (lweek) {
     console.log(lweek);
-    const { data } = await axios.get(`week/${lweek}`);
+    const { data } = await axios.get(`full/${lweek}`);
     idbKeyval.set(`week${lweek}`, data.response);
     console.warn(data.response);
     return data.response;

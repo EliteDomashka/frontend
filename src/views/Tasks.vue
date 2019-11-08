@@ -122,7 +122,8 @@ export default {
   created() {
   },
   beforeMount() {
-      this.$store.dispatch('tasks', { week: this.$dayjs().week(), $state: null});
+    this.$store.dispatch('tasks', { week: this.$dayjs().week(), $state: null});
+    if(this.tasks[this.$dayjs().week()] === undefined) setTimeout(() => this.addDay(this.$dayjs()), 500);
     const weekdays = this.$dayjs().$locale().weekdays.slice();
     // const sunday = weekdays[0];
     // weekdays.push(sunday);

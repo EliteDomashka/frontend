@@ -72,7 +72,10 @@ export default {
       }
     },
     infiniteHandler($state) {
-      this.$store.dispatch('tasks', { week: this.weekCounter += 1, $state });
+      this.$store.dispatch('tasks', { week: this.weekCounter += 1, callback: () => {
+            $state.loaded();
+            this.scrollTo(this.currentDay);
+          }});
 
       const last = this.days[this.days.length - 1].dayOfYear;
       let addDays = 3;
@@ -84,23 +87,28 @@ export default {
       }
     },
     addDay(dt) {
-      if (dt.day() !== 6) { // если не ВС
+      if (dt.day() !== 0) { // если не ВС
         this.days.push({
           dayOfYear: dt.dayOfYear(),
           day: dt.day(),
-          weekDay: this.weekdays[(dt.day() !== 0 ? dt.day() : 6) - 1],
+          weekDay: this.weekdays[dt.day()-1],
           week: dt.week(),
         });
-        if(dt.dayOfYear() === this.currentDay){
-          this.scrollTo(dt.dayOfYear());
-        }
         return true;
       }
       return false;
     },
       scrollTo(day){
           this.$nextTick(() => setTimeout(() => {
-              this.$scrollTo(document.getElementById('#day' + this.day));
+              if(!this.scrolledToCurrentDay) this.$scrollTo(document.getElementById('#day' + day), 100, {
+                  // offset: -0,
+                  force: true,
+                  cancelable: false,
+                  onDone: (element) => {
+                      console.log('onDone');
+                      this.scrolledToCurrentDay = true;
+                  },
+              });
           }, 100))
       }
   },
@@ -109,6 +117,7 @@ export default {
       details: [],
       weekdays: [],
 
+      scrolledToCurrentDay: false,
       currentDay: this.$dayjs().dayOfYear(),
       days: [],
       weekCounter: this.$dayjs().week() - 2,
@@ -125,8 +134,11 @@ export default {
   created() {
   },
   beforeMount() {
-    this.$store.dispatch('tasks', { week: this.$dayjs().week(), $state: null});
-    if(this.tasks[this.$dayjs().week()] === undefined) setTimeout(() => this.addDay(this.$dayjs()), 500);
+    this.$store.dispatch('tasks', { week: this.$dayjs().week(), callback: () => {
+        console.log('loaded current');
+        this.scrollTo(this.currentDay);
+        }});
+    // if(this.tasks[this.$dayjs().week()] === undefined) setTimeout(() => this.addDay(this.$dayjs()), 500);
     const weekdays = this.$dayjs().$locale().weekdays.slice();
     // const sunday = weekdays[0];
     // weekdays.push(sunday);
@@ -148,7 +160,6 @@ export default {
       this.addDay(dt);
     }
 
-    this.$store.dispatch('schedule', { week: this.weekCounter + 1 });
   },
 };
 </script>

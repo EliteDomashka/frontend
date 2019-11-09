@@ -92,14 +92,17 @@ export default {
           week: dt.week(),
         });
         if(dt.dayOfYear() === this.currentDay){
-          this.$nextTick(() => setTimeout(() => {
-            this.$scrollTo(document.getElementById('#day' + this.currentDay));
-          }, 100))
+          this.scrollTo(dt.dayOfYear());
         }
         return true;
       }
       return false;
     },
+      scrollTo(day){
+          this.$nextTick(() => setTimeout(() => {
+              this.$scrollTo(document.getElementById('#day' + this.day));
+          }, 100))
+      }
   },
   data() {
     return {

@@ -1,8 +1,8 @@
 <template>
   <section class="container">
     <div class="columns is-mobile is-multiline" >
-    <div class="column is-one-third-desktop is-full-mobile is-full-tablet" v-for="(day) in days" :key="day.dayOfYear">
-        <div class="card" v-if="tasks[day.week] !== undefined && tasks[day.week] !== undefined" :id="'#day' + day.dayOfYear">
+    <div class="column is-one-third-desktop is-full-mobile is-full-tablet" v-for="(day) in days" :key="day.dayOfYear" :id="'#day' + day.dayOfYear">
+        <div class="card" v-if="tasks[day.week] !== undefined && tasks[day.week] !== undefined">
           <header class="card-header">
             <p :class='{"card-header-title": true, "has-text-info": currentDay === day.dayOfYear}'>{{day.weekDay}} ({{$dayjs().week(day.week).startOf('week').day(day.day != 0 ? day.day : 6).format("DD.MM.YYYY")}})</p>
           </header>
@@ -99,6 +99,7 @@ export default {
       return false;
     },
       scrollTo(day){
+        if(this.currentDay === day && this.$dayjs().dayOfYear(this.currentDay).day() === 0) day++;
           this.$nextTick(() => setTimeout(() => {
               if(!this.scrolledToCurrentDay) this.$scrollTo(document.getElementById('#day' + day), 100, {
                   // offset: -0,
@@ -134,15 +135,18 @@ export default {
   created() {
   },
   beforeMount() {
-    this.$store.dispatch('tasks', { week: this.$dayjs().week(), callback: () => {
-        console.log('loaded current');
-        this.scrollTo(this.currentDay);
-        }});
-    // if(this.tasks[this.$dayjs().week()] === undefined) setTimeout(() => this.addDay(this.$dayjs()), 500);
+      const currentWeek = this.$dayjs().week();
+      let loadweeks = [currentWeek];
+      if(this.$dayjs().day() === 0){ //если вс
+          loadweeks.push(currentWeek+1);
+      }
+      loadweeks.forEach((week) => {
+          this.$store.dispatch('tasks', { week: week, callback: () => {
+                  if(currentWeek === week) this.scrollTo(this.currentDay);
+              }});
+      });
+
     const weekdays = this.$dayjs().$locale().weekdays.slice();
-    // const sunday = weekdays[0];
-    // weekdays.push(sunday);
-    // delete weekdays[0];
     weekdays.shift();
 
     for (const i in weekdays) {

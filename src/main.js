@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import Buefy from 'buefy';
+import InfiniteLoading from 'vue-infinite-loading';
+
 import VueScrollTo from 'vue-scrollto';
 
 import axios from 'axios';
@@ -19,6 +21,7 @@ Vue.prototype.$axios = axios;
 
 Vue.use(Buefy);
 Vue.use(VueScrollTo);
+Vue.use(InfiniteLoading);
 Vue.use(vuedayjs, {
   lang: 'uk',
 });

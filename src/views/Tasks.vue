@@ -54,12 +54,8 @@
 <script>
 /* eslint-disable */
 
-import InfiniteLoading from 'vue-infinite-loading';
 
 export default {
-  components: {
-    InfiniteLoading,
-  },
   methods: {
     openDetail(taskId) {
       console.log(this.details);

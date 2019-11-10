@@ -3,6 +3,7 @@ import Buefy from 'buefy';
 import InfiniteLoading from 'vue-infinite-loading';
 
 import VueScrollTo from 'vue-scrollto';
+import VueOffline from 'vue-offline';
 
 import axios from 'axios';
 import App from './App.vue';
@@ -22,6 +23,10 @@ Vue.prototype.$axios = axios;
 Vue.use(Buefy);
 Vue.use(VueScrollTo);
 Vue.use(InfiniteLoading);
+Vue.use(VueOffline, {
+  mixin: true,
+  storage: false,
+});
 Vue.use(vuedayjs, {
   lang: 'uk',
 });

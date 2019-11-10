@@ -37,9 +37,8 @@
                           </p>
                         </b-table-column>
                       </template>
-                      <template slot="detail" slot-scope="props">
-                        {{ props.row.task }}
-                        <p class="detail-text" v-html="props.row.desc"></p>
+                      <template slot="detail" slot-scope="props" class="detail-text">
+                        {{props.row.task}} {{props.row.desc}}
                       </template>
                     </b-table>
                   </div>

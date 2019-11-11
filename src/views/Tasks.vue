@@ -106,6 +106,18 @@ export default {
                   },
               });
           }, 100))
+      },
+      loadImportant(){
+          const currentWeek = this.$dayjs().week();
+          let loadweeks = [currentWeek];
+          if(this.$dayjs().day() === 0){ //если вс
+              loadweeks.push(currentWeek+1);
+          }
+          loadweeks.forEach((week) => {
+              this.$store.dispatch('tasks', { week: week, callback: () => {
+                      if(currentWeek === week) this.scrollTo(this.currentDay);
+                  }});
+          });
       }
   },
   data() {
@@ -130,16 +142,7 @@ export default {
   created() {
   },
   beforeMount() {
-      const currentWeek = this.$dayjs().week();
-      let loadweeks = [currentWeek];
-      if(this.$dayjs().day() === 0){ //если вс
-          loadweeks.push(currentWeek+1);
-      }
-      loadweeks.forEach((week) => {
-          this.$store.dispatch('tasks', { week: week, callback: () => {
-                  if(currentWeek === week) this.scrollTo(this.currentDay);
-              }});
-      });
+    this.loadImportant();
 
     const weekdays = this.$dayjs().$locale().weekdays.slice();
     weekdays.shift();

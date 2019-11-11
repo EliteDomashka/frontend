@@ -15,12 +15,16 @@ import router from './router';
 import store from './store';
 import vuedayjs from './helpers/vue-dayjs';
 
+require('./icons');
 
 axios.defaults.baseURL = 'https://backend.domashka.cloud/api/';
 Vue.prototype.$axios = axios;
 
 
-Vue.use(Buefy);
+Vue.use(Buefy, {
+  defaultIconComponent: 'vue-fontawesome',
+  defaultIconPack: 'fas',
+});
 Vue.use(VueScrollTo);
 Vue.use(InfiniteLoading);
 Vue.use(VueOffline, {

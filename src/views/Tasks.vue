@@ -139,7 +139,33 @@ export default {
       return this.$store.state.data.weeks;
     },
   },
-  created() {
+  mounted() {
+      const notify = (obj) => {
+          this.$buefy.notification.open(Object.assign({
+              closable: false,
+              hasIcon: true,
+              queue: false
+          }, obj));
+      };
+      const offline = () => {
+          notify({
+              duration: 10000,
+              message: `Оффлайн режим, використовуєтся кеш данних`,
+              type: 'is-danger',
+          });
+      };
+      this.$on('offline', offline);
+      this.$on('online', () => {
+          notify({
+              duration: 5000,
+              message: `Відновлено підключення до інтернету, оновлюємо кеш данних`,
+              type: 'is-success',
+          });
+          this.loadImportant();
+      });
+
+      if(!this.isOnline) offline();
+
   },
   beforeMount() {
     this.loadImportant();

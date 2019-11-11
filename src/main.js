@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Buefy from 'buefy';
-import InfiniteLoading from 'vue-infinite-loading';
 
+import InfiniteLoading from 'vue-infinite-loading';
 import VueScrollTo from 'vue-scrollto';
 import VueOffline from 'vue-offline';
 

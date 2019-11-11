@@ -70,7 +70,7 @@ export default {
       this.$store.dispatch('tasks', { week: this.weekCounter += 1, callback: () => {
             $state.loaded();
             this.scrollTo(this.currentDay);
-          }});
+      }});
 
       const last = this.days[this.days.length - 1].dayOfYear;
       let addDays = 3;
@@ -101,7 +101,6 @@ export default {
                   force: true,
                   cancelable: false,
                   onDone: (element) => {
-                      console.log('onDone');
                       this.scrolledToCurrentDay = true;
                   },
               });

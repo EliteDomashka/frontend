@@ -8,6 +8,7 @@ const errorHandler = (err) => {
 
 export async function getTasks(week, cache = true) {
   const getFunc = async function (lweek) {
+    if (!navigator.onLine) return {};
     console.log(lweek);
     const { data } = await axios.get(`full/${lweek}`);
     idbKeyval.set(`week${lweek}`, data.response);

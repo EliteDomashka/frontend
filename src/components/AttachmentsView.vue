@@ -36,8 +36,7 @@ export default {
         this.imageModal.img_src = this.getAttachmentUrl(attachment.id);
         this.imageModal.active = true;
       } else {
-        const win = window.open(this.getAttachmentUrl(attachment.id), '_blank');
-        win.focus();
+        window.open(this.getAttachmentUrl(attachment.id), '_blank');
       }
     },
     getAttachmentUrl(attachmentId) {

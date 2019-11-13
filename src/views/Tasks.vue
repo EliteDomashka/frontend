@@ -52,7 +52,6 @@
 </template>
 
 <script>
-/* eslint-disable */
 
 
 export default {
@@ -67,10 +66,13 @@ export default {
       }
     },
     infiniteHandler($state) {
-      this.$store.dispatch('tasks', { week: this.weekCounter += 1, callback: () => {
-            $state.loaded();
-            this.scrollTo(this.currentDay);
-      }});
+      this.$store.dispatch('tasks', {
+        week: this.weekCounter += 1,
+        callback: () => {
+          $state.loaded();
+          this.scrollTo(this.currentDay);
+        },
+      });
 
       const last = this.days[this.days.length - 1].dayOfYear;
       let addDays = 3;
@@ -86,38 +88,44 @@ export default {
         this.days.push({
           dayOfYear: dt.dayOfYear(),
           day: dt.day(),
-          weekDay: this.weekdays[dt.day()-1],
+          weekDay: this.weekdays[dt.day() - 1],
           week: dt.week(),
         });
         return true;
       }
       return false;
     },
-      scrollTo(day){
-        if(this.currentDay === day && this.$dayjs().dayOfYear(this.currentDay).day() === 0) day++;
-          this.$nextTick(() => setTimeout(() => {
-              if(!this.scrolledToCurrentDay) this.$scrollTo(document.getElementById('#day' + day), 100, {
-                  // offset: -0,
-                  force: true,
-                  cancelable: false,
-                  onDone: (element) => {
-                      this.scrolledToCurrentDay = true;
-                  },
-              });
-          }, 100))
-      },
-      loadImportant(){
-          const currentWeek = this.$dayjs().week();
-          let loadweeks = [currentWeek];
-          if(this.$dayjs().day() === 0){ //если вс
-              loadweeks.push(currentWeek+1);
-          }
-          loadweeks.forEach((week) => {
-              this.$store.dispatch('tasks', { week: week, callback: () => {
-                      if(currentWeek === week) this.scrollTo(this.currentDay);
-                  }});
+    scrollTo(Day) {
+      let day = Day;
+      if (this.currentDay === day && this.$dayjs().dayOfYear(this.currentDay).day() === 0) day += 1;
+      this.$nextTick(() => setTimeout(() => {
+        if (!this.scrolledToCurrentDay) {
+          this.$scrollTo(document.getElementById(`#day${day}`), 100, {
+          // offset: -0,
+            force: true,
+            cancelable: false,
+            onDone: () => {
+              this.scrolledToCurrentDay = true;
+            },
           });
+        }
+      }, 100));
+    },
+    loadImportant() {
+      const currentWeek = this.$dayjs().week();
+      const loadweeks = [currentWeek];
+      if (this.$dayjs().day() === 0) { // если вс
+        loadweeks.push(currentWeek + 1);
       }
+      loadweeks.forEach((week) => {
+        this.$store.dispatch('tasks', {
+          week,
+          callback: () => {
+            if (currentWeek === week) this.scrollTo(this.currentDay);
+          },
+        });
+      });
+    },
   },
   data() {
     return {
@@ -139,32 +147,31 @@ export default {
     },
   },
   mounted() {
-      const notify = (obj) => {
-          this.$buefy.notification.open(Object.assign({
-              closable: false,
-              hasIcon: true,
-              queue: false
-          }, obj));
-      };
-      const offline = () => {
-          notify({
-              duration: 10000,
-              message: `Оффлайн режим, використовуєтся кеш данних`,
-              type: 'is-danger',
-          });
-      };
-      this.$on('offline', offline);
-      this.$on('online', () => {
-          notify({
-              duration: 5000,
-              message: `Відновлено підключення до інтернету, оновлюємо кеш данних`,
-              type: 'is-success',
-          });
-          this.loadImportant();
+    const notify = (obj) => {
+      this.$buefy.notification.open(Object.assign({
+        closable: false,
+        hasIcon: true,
+        queue: false,
+      }, obj));
+    };
+    const offline = () => {
+      notify({
+        duration: 10000,
+        message: 'Оффлайн режим, використовуєтся кеш данних',
+        type: 'is-danger',
       });
+    };
+    this.$on('offline', offline);
+    this.$on('online', () => {
+      notify({
+        duration: 5000,
+        message: 'Відновлено підключення до інтернету, оновлюємо кеш данних',
+        type: 'is-success',
+      });
+      this.loadImportant();
+    });
 
-      if(!this.isOnline) offline();
-
+    if (!this.isOnline) offline();
   },
   beforeMount() {
     this.loadImportant();
@@ -180,13 +187,12 @@ export default {
     }
     this.weekdays = weekdays;
 
-    const currentDay = this.$dayjs().startOf("week").dayOfYear();
+    const currentDay = this.$dayjs().startOf('week').dayOfYear();
 
     for (let day = currentDay - 7; day < currentDay + 14; day += 1) {
       const dt = this.$dayjs().dayOfYear(day);
       this.addDay(dt);
     }
-
   },
 };
 </script>

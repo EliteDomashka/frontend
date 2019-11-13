@@ -38,11 +38,11 @@
                         </b-table-column>
                       </template>
                       <template slot="detail" slot-scope="props">
-                        <div v-if="props.row.desc !== ''">
-                          <p class="detail-text">{{props.row.task}} {{props.row.desc}}</p>
-                          <hr>
+                        <p class="detail-text" v-if="props.row.desc !== undefined">{{props.row.task}} {{props.row.desc}}</p>
+                        <div v-if="props.row.attachment_have === true">
+                          <hr v-if="props.row.desc !== undefined" />
+                          <AttachmentsView :task_id="props.row.task_id"></AttachmentsView>
                         </div>
-                        <AttachmentsView :task_id="props.row.task_id"></AttachmentsView>
                       </template>
                     </b-table>
                   </div>

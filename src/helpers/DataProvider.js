@@ -1,9 +1,16 @@
 /* eslint-disable no-console */
 import axios from 'axios';
+import { NotificationProgrammatic as Notification } from 'buefy';
 import { idbKeyval } from './storage';
 
 const errorHandler = (err) => {
   console.error(err);
+  Notification.open({
+    message: err.message,
+    type: 'is-danger',
+    closable: false,
+    queue: false,
+  });
 };
 
 export async function getTasks(week, cache = true) {

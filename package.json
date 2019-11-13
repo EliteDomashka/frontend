@@ -46,7 +46,7 @@
   "vue": {
     "pwa": {
       "name": "EliteDomashka PWA",
-      "assetsVersion": "2",
+      "assetsVersion": "3",
       "workboxOptions": {
         "skipWaiting": true
       }

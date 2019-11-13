@@ -1,30 +1,44 @@
 import Vue from 'vue';
+import Buefy from 'buefy';
+
 import InfiniteLoading from 'vue-infinite-loading';
 import VueScrollTo from 'vue-scrollto';
-import VueScrollReveal from 'vue-scroll-reveal';
-import vuedayjs from './helpers/vue-dayjs';
-import App from './App.vue';
+import VueOffline from 'vue-offline';
 
+import axios from 'axios';
+import App from './App.vue';
 import './registerServiceWorker';
 import './buefy';
 import './assets/scss/app.scss';
-import Tasks from './pages/Tasks';
-import Lessons from './pages/Lessons';
 
-window.API_URL = 'https://backend.domashka.cloud/api/';
+import router from './router';
+import store from './store';
+import vuedayjs from './helpers/vue-dayjs';
+
+require('./icons');
+
+axios.defaults.baseURL = 'https://backend.domashka.cloud/api/';
+Vue.prototype.$axios = axios;
+
+
+Vue.use(Buefy, {
+  defaultIconComponent: 'vue-fontawesome',
+  defaultIconPack: 'fas',
+});
+Vue.use(VueScrollTo);
+Vue.use(InfiniteLoading);
+Vue.use(VueOffline, {
+  mixin: true,
+  storage: false,
+});
 Vue.use(vuedayjs, {
   lang: 'uk',
 });
-Vue.use(InfiniteLoading);
-Vue.use(VueScrollTo);
-Vue.use(VueScrollReveal);
 
-
-Vue.prototype.localStorage = window.localStorage;
 Vue.config.productionTip = false;
 
-Vue.component('Tasks', Tasks);
-Vue.component('Lessons', Lessons);
 new Vue({
+  router,
+  store,
   render: h => h(App),
 }).$mount('#app');

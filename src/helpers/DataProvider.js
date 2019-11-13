@@ -25,7 +25,7 @@ export async function getTasks(week, cache = true) {
 
   if (cache === true) {
     const val = await idbKeyval.get(`week${week}`);
-    if (val != null && val !== undefined) {
+    if (val !== null && val !== undefined) {
       setTimeout(() => {
         getFunc(week).then(ok => console.warn(ok));
       }, 1);

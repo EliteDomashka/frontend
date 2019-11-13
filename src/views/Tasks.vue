@@ -33,12 +33,16 @@
                           <p v-if="props.row.task !== undefined">
                             {{ props.row.task }}
                             <a class="detail-warn" v-if="props.row.desc != ''" @click.stop="openDetail(props.row.task_id)">...</a>
-                            <a v-if="props.row.attachment_have == true" :href="'https://t.me/EliteDomashkaBot?start=task_'+props.row.task_id" target="_blank"> 📎</a>
+                            <a v-if="props.row.attachment_have == true" @click.stop="openDetail(props.row.task_id)" > 📎</a>
                           </p>
                         </b-table-column>
                       </template>
-                      <template slot="detail" slot-scope="props" class="detail-text">
-                        {{props.row.task}} {{props.row.desc}}
+                      <template slot="detail" slot-scope="props">
+                        <div v-if="props.row.desc !== ''">
+                          <p class="detail-text">{{props.row.task}} {{props.row.desc}}</p>
+                          <hr>
+                        </div>
+                        <AttachmentsView :task_id="props.row.task_id"></AttachmentsView>
                       </template>
                     </b-table>
                   </div>
@@ -52,9 +56,10 @@
 </template>
 
 <script>
-
+import AttachmentsView from '../components/AttachmentsView.vue';
 
 export default {
+  components: { AttachmentsView },
   methods: {
     openDetail(taskId) {
       console.log(this.details);

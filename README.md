@@ -1,23 +1,10 @@
-# EliteDomashka 
+# EliteDomashka PWA
 
-быстрая реализация отображения дз на колнке 
+Frontend клієнт дo [EliteDomashka](https://gitlab.com/EliteDomashka/new-backend), про можливості можна почитати [тут](https://gitlab.com/EliteDomashka/vueclient/merge_requests/1)
 
-## Project setup
-```
-yarn install
-```
+## Deploy
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
 
-### Compiles and minifies for production
-```
-yarn build
-```
+[![Deploy with ZEIT Now](https://zeit.co/button)](https://zeit.co/new/project?template=https://gitlab.com/EliteDomashka/vueclient/tree/master)
 
-### Lints and fixes files
-```
-yarn lint
-```
+_Live Example: https://13.domashka.cloud_
